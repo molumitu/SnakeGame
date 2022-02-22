@@ -1,2 +1,2 @@
 # SnakeGame
-# python; torch; DQN
+A DQN implementaion in pytorch style
