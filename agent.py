@@ -96,7 +96,7 @@ class Agent:
             self.env.init()
             if self.epoch % SHOW == 0:
                 self.render_init()
-            reward = 0
+            reward = 1
             done = False
             state = self.env.get_state()
             next_state = self.env.get_state()
