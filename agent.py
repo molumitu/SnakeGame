@@ -8,6 +8,8 @@ import torch
 import random
 import os
 import time
+from torch.utils.tensorboard import SummaryWriter
+
 
 
 class Agent:
@@ -23,6 +25,7 @@ class Agent:
 
         time_str = time.strftime("%Y%m%d_%H_%M_%S", time.localtime())
         self.save_path = f'./results/{time_str}/model'
+        self.writer = SummaryWriter()
 
     def load_model(self):
         try:
@@ -60,13 +63,13 @@ class Agent:
 
     def get_action(self, state):\
         # epsilon-greedy search
-        if self.epoch <= 1500:
+        if self.epoch <= 1500*2:
             if random.randint(0,19) == 0:
                 return random.randint(0, 3)
-        elif self.epoch <= 5000:
+        elif self.epoch <= 5000*2:
             if random.randint(0,49) == 0:
                 return random.randint(0, 3)
-        elif self.epoch <= 15000:
+        elif self.epoch <= 15000*2:
             if random.randint(0,299) == 0:
                 return random.randint(0, 3)
         state = torch.tensor(state)  # .cuda()
@@ -108,19 +111,20 @@ class Agent:
                 except TimeoutError:
                     reward = -25
                     done = True
-
-                if self.epoch % SHOW == 0:
-                    self.render_update()
-                reward = 40 * int(eaten)
-                next_state = self.env.get_state()
+                else:
+                    if self.epoch % SHOW == 0:
+                        self.render_update()
+                    reward = 40 * int(eaten)
+                    next_state = self.env.get_state()
                 self.train_short_memory(state, action, reward, next_state, done)
             if self.epoch % SHOW == 0:
                 plt.pause(1)
                 plt.close()
 
-            # self.train_long_memory()
+            self.train_long_memory()
             print(self.epoch, self.env.score, self.env.steps)
-
+            self.writer.add_scalar('Train/Score', self.env.score, self.epoch)
+            self.writer.add_scalar('Train/steps', self.env.steps, self.epoch)
             if self.epoch % SAVE == 0:
                 self.save_model()
             self.epoch += 1
