@@ -1,3 +1,6 @@
 /result
 *.ipynb
 *.pyc
+*.pth
+*.0
+*.json
