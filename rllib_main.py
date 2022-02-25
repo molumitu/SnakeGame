@@ -17,8 +17,8 @@ ray.tune.run(
     DQNTrainer,
     config=config,
     stop={
-        "episode_reward_mean": 300,
-        "agent_timesteps_total": 200000,
+        "episode_reward_mean": 500,
+        "agent_timesteps_total": 400000,
     },
     checkpoint_at_end=True,
     verbose=1,
