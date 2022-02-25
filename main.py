@@ -1,4 +1,6 @@
 from agent import Agent
+from utils import TrainParam
 if __name__ == '__main__':
-    agent = Agent()
+    train_param = TrainParam()
+    agent = Agent(train_param)
     agent.train()
