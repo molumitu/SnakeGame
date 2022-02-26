@@ -115,7 +115,7 @@ class SnakeGame(gym.Env):
         plt.draw()
         self.ax.set_xlim(-0.5, 15.5)
         self.ax.set_ylim(-0.5, 15.5)
-        plt.pause(0.03)
+        plt.pause(0.1)
 
     def render_complete(self):
         plt.pause(1)
