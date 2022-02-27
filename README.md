@@ -1,2 +1,5 @@
 # SnakeGame
-A DQN implementaion in pytorch style
+DQN
+pytorch
+rllib
+ray tune
